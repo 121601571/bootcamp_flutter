@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'httpsrv.dart';
 
 class reviewdetail extends StatefulWidget {
   final String  url;
@@ -17,21 +17,59 @@ class reviewdetail extends StatefulWidget {
   final String title;
 
   @override
-  reviewdetailState createState() => reviewdetailState();
+  reviewdetailState createState() => reviewdetailState( url );
 }
 
 class reviewdetailState extends State<reviewdetail> {
+  reviewdetailState(this.url );
+  final String url;
+
+
+
+  List<dynamic> details = [];
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    processdt(url);
+  }
+
+  Future processdt(url) async{
+    var res = await getabrlink(url);
+    print(res);
+    setState(() {
+      details.clear();
+      details.addAll(res);
+    });
+
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reviews...'),
+        title: Text('Reviews Detail'),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Text(''),
-      ),
+      body: listbody(),
+    );
+  }
+  
+  Widget listbody(){
+    return ListView.builder(
+      itemCount: details.length,
+      itemBuilder: (context, index) {
+        return new ListTile(
+          leading: new Icon(Icons.person),
+          title: new Text(details[index]['comment'], style: TextStyle(fontSize: 26),),
+
+          subtitle: new Text('rating: '+details[index]['rating'].toString()),
+         // trailing: new Text(details[index]['reviewer_email']),
+        );
+      },
+
     );
   }
   

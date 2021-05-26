@@ -9,3 +9,12 @@ Future<List> getadslist() async {
   }
 }
 
+Future<List> getabrlink(addr) async {
+  try {
+    var response = await Dio().get(addr);
+    return response.data;
+  } catch (e) {
+    print(e);
+  }
+}
+
