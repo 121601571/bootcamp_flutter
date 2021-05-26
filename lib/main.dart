@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'httpsrv.dart';
+import 'reviewdetail.dart';
 
 void main() {
   runApp(MyApp());
@@ -83,6 +84,12 @@ class _MyHomePageState extends State<MyHomePage> {
             child: cell1(ads[index]),
             onTap: (){
               print(ads[index]['reviewsUrl']);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => reviewdetail(url: ads[index]['reviewsUrl'],),
+                ),
+              );
             },
           );
           // if (index == ads.length - 1 && ads.length < 200) {
